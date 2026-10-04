@@ -23,7 +23,7 @@
 
 {
     'name': 'odoo Tweak,Boost,Customize,Ai All in One. Customize,UI,Boost,Security,Data,Development Enhance',
-    'version': '13.24.07.23',
+    'version': '13.24.07.24',
     'author': 'odooai.cn',
     'category': 'Productivity',
     'website': 'https://www.odooai.cn',
@@ -153,7 +153,11 @@
         'views/ir_model_data_views.xml',
         # data
         'data/ir_config_parameter_data.xml',
-        'data/ir_module_module_data.xml',
+        # NOTE: ir_module_module_data.xml eliminado: hacía <record id="base.module_*">
+        # sobre módulos Enterprise (helpdesk, web_studio, etc.) que no existen
+        # en Community -> "Cannot update missing record". El cambio de website
+        # ya lo cubre de forma segura pre_init_hook (SQL WHERE license like OEEL%).
+        # 'data/ir_module_module_data.xml',
         # 'data/digest_template_data.xml',
         'data/res_company_data.xml',
     ],
@@ -165,7 +169,7 @@
     'css': [],
     'js': [],
     # 'pre_init_hook': 'pre_init_hook',
-    # 'post_init_hook': 'post_init_hook',
+    'post_init_hook': 'post_init_hook',
     'installable': True,
     'application': True,
     'auto_install': True,

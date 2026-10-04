@@ -40,8 +40,15 @@ def pre_init_hook(cr):
         pass
 
 def post_init_hook(cr, registry):
-    # a = check_module_installed(cr, ['app_web_superbar','aaaaa'])
-    pass
+    # Sustituto seguro de data/ir_module_module_data.xml:
+    # actualiza el website solo en los módulos que realmente existan,
+    # sin fallar si un módulo Enterprise no está en Community.
+    try:
+        sql = "UPDATE ir_module_module SET website = '%s' WHERE license like '%s' and website <> ''" % ('https://www.odooai.cn', 'OEEL%')
+        cr.execute(sql)
+        cr.commit()
+    except Exception:
+        pass
     # cr.execute("")
 
 def uninstall_hook(cr, registry):
